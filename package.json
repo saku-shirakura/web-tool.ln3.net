@@ -1,7 +1,9 @@
 {
   "name": "web-tool.ln3.net",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "license": "MIT",
+  "author": "Saku Shirakura<saku@sakushira.com>",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
