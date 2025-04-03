@@ -23,14 +23,25 @@
  */
 
 import {useEffect, useRef, useState} from "react";
-import {Button, FormControl, Input, InputLabel} from "@mui/material";
+import {Button, FormControl, IconButton, Input, InputLabel} from "@mui/material";
+import {ArrowDownward, ArrowUpward} from "@mui/icons-material";
 
 const Counter = () => {
     const [count, setCount] = useState(0);
     const [min, setMin] = useState(0);
-    const [max, setMax] = useState(0);
+    const [max, setMax] = useState(100);
     const [showSettings, setShowSettings] = useState(false);
     const canvas = useRef<HTMLCanvasElement>(null);
+    const [mode, setMode] = useState<"up" | "down">("up");
+
+    const reset = () => setCount(mode == "up" ? min : max);
+
+    useEffect(
+        () => {
+            reset();
+        },
+        [mode]
+    )
 
     const Settings = () => {
         if (showSettings) {
@@ -53,6 +64,16 @@ const Counter = () => {
                             min: 0,
                             max: 2000000
                         }} value={max}/>
+                    </FormControl>
+                    <FormControl>
+                        <IconButton onClick={() => {
+                            setMode(prevState => prevState == "up" ? "down" : "up");
+                        }}>
+                            {(mode == "up" ?
+                                    <ArrowUpward/> :
+                                    <ArrowDownward/>
+                            )}
+                        </IconButton>
                     </FormControl>
                 </>
             );
@@ -95,9 +116,17 @@ const Counter = () => {
                         setShowSettings(prevState => !prevState)
                     }}> {showSettings ? "閉じる" : "設定"} </Button>
                 </FormControl>
+                <FormControl>
+                    <Button onClick={reset}>
+                        リセット
+                    </Button>
+                </FormControl>
                 <canvas width="300" height="300" ref={canvas} onClick={() => {
                     setCount(prevState => {
-                        return (prevState + 1 <= max) ? prevState + 1 : min;
+                        if (mode == "up")
+                            return (prevState + 1 <= max) ? prevState + 1 : min;
+                        else
+                            return prevState - 1 >= min ? prevState - 1 : min;
                     })
                 }}/>
             </div>

@@ -35,12 +35,26 @@ const Index = () => {
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Index/>}/>
-                <Route path="/tools/counter" element={<Counter/>}/>
-            </Routes>
-        </BrowserRouter>
+        <>
+            <header>
+                <div>
+
+                </div>
+            </header>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="*" element={<Index/>}/>
+                    <Route path="/tools/counter" element={<Counter/>}/>
+                </Routes>
+            </BrowserRouter>
+            <footer>
+                <div>
+                    <p>このwebアプリケーションではいくつかのオープンソースソフトウェアを使用しています。</p>
+                    <p>詳細は<a href="https://github.com/saku-shirakura/web-tool.ln3.net">Github リポジトリ</a>を確認してください。</p>
+                    <p>（リポジトリを確認する方法によるライセンス表示は仮のものです。ライセンスページは追加を予定しています。）</p>
+                </div>
+            </footer>
+        </>
     );
 }
 
